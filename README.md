@@ -203,7 +203,7 @@ SEED_ADMIN_PASSWORD=Admin@123
 Frontend: copy [frontend/.env.example](/d:/dev/Rolebased%20Task%20Management/frontend/.env.example)
 
 ```env
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=https://taskflow-task-management.onrender.com/api
 ```
 
 ### 3. Seed demo data
