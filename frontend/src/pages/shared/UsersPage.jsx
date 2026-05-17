@@ -170,7 +170,7 @@ export default function UsersPage() {
                     key={manager._id}
                     className={`rounded-3xl border p-4 text-left transition ${
                       selectedManager?._id === manager._id
-                        ? "border-brand-300 bg-gradient-to-r from-brand-50 to-accent-100/70 shadow-lg shadow-orange-100"
+                        ? "border-brand-300 bg-brand-50 shadow-lg shadow-slate-200"
                         : "border-brand-100 bg-white/75 hover:-translate-y-0.5 hover:border-brand-200"
                     }`}
                     onClick={() => setSelectedManagerId(manager._id)}

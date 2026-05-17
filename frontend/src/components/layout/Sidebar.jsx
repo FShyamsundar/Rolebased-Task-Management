@@ -45,7 +45,7 @@ export function Sidebar() {
                 cn(
                   "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition",
                   isActive
-                    ? "bg-gradient-to-r from-brand-500 to-accent-500 text-white shadow-lg shadow-orange-200"
+                    ? "bg-brand-600 text-white shadow-lg shadow-slate-200"
                     : "text-slate-600 hover:bg-brand-50 hover:text-slate-900"
                 )
               }
