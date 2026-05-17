@@ -17,30 +17,32 @@ import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 const app = express();
 
 const allowedOrigins = new Set(env.clientUrls);
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin) {
+      return callback(null, true);
+    }
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin) {
-        return callback(null, true);
-      }
+    const isExplicitlyAllowed = allowedOrigins.has(origin);
+    const isVercelPreview =
+      origin.endsWith(".vercel.app") &&
+      [...allowedOrigins].some((allowedOrigin) => allowedOrigin.endsWith(".vercel.app"));
 
-      const isExplicitlyAllowed = allowedOrigins.has(origin);
-      const isVercelPreview =
-        origin.endsWith(".vercel.app") &&
-        [...allowedOrigins].some((allowedOrigin) => allowedOrigin.endsWith(".vercel.app"));
+    if (isExplicitlyAllowed || isVercelPreview) {
+      return callback(null, true);
+    }
 
-      if (isExplicitlyAllowed || isVercelPreview) {
-        return callback(null, true);
-      }
+    const error = new Error("CORS origin not allowed.");
+    error.statusCode = 403;
+    return callback(error);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
 
-      const error = new Error("CORS origin not allowed.");
-      error.statusCode = 403;
-      return callback(error);
-    },
-    credentials: true
-  })
-);
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(helmet());
 app.use(
   rateLimit({
