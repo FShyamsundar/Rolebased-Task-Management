@@ -3,6 +3,15 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const required = ["MONGODB_URI", "JWT_SECRET"];
+const normalizeOrigin = (value) => {
+  const trimmed = value.trim();
+
+  try {
+    return new URL(trimmed).origin;
+  } catch {
+    return trimmed;
+  }
+};
 
 required.forEach((key) => {
   if (!process.env[key]) {
@@ -16,10 +25,10 @@ export const env = {
   mongoUri: process.env.MONGODB_URI,
   jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "1d",
-  clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
+  clientUrl: normalizeOrigin(process.env.CLIENT_URL || "http://localhost:5173"),
   clientUrls: (process.env.CLIENT_URLS || process.env.CLIENT_URL || "http://localhost:5173")
     .split(",")
-    .map((value) => value.trim())
+    .map(normalizeOrigin)
     .filter(Boolean),
   seedAdminEmail: process.env.SEED_ADMIN_EMAIL || "admin@taskflowhq.com",
   seedAdminPassword: process.env.SEED_ADMIN_PASSWORD || "Admin@123"
