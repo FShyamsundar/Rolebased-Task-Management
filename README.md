@@ -195,7 +195,8 @@ NODE_ENV=development
 MONGODB_URI=your_mongodb_atlas_uri
 JWT_SECRET=your_long_random_secret
 JWT_EXPIRES_IN=1d
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=https://taskflow-management-hazel.vercel.app
+CLIENT_URLS=https://taskflow-management-hazel.vercel.app
 SEED_ADMIN_EMAIL=admin@taskflowhq.com
 SEED_ADMIN_PASSWORD=Admin@123
 ```
